@@ -19,7 +19,7 @@ import {
   newCardPopup,
   newCardForm,
 } from "../index.js";
-import { createCard, deleteCard } from "./cards.js";
+import { createCard, deleteCard } from "./card.js";
 
 // Функция открытия попапа
 function openPopup(popup) {

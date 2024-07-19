@@ -1,5 +1,6 @@
 import "./pages/index.css";
-import { initialCards, createCard, deleteCard } from "./components/cards.js";
+import { initialCards } from "./components/cards.js";
+import { createCard, deleteCard } from "./components/card.js";
 import {
   openPopup,
   closePopup,
