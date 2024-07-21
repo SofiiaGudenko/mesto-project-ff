@@ -25,12 +25,12 @@ function closePopup(popup) {
 }
 
 function keyHandler(evt) {
-  if (evt.key === "Escape") {
-    const popups = document.querySelectorAll(".popup");
-    popups.forEach((popup) => {
-      closePopup(popup);
-    });
-  }
+    if (evt.key === "Escape") {
+      const openedPopup = document.querySelector(".popup_is-opened");
+      if (openedPopup) {
+        closePopup(openedPopup);
+      }
+    }
 }
 
 // Редактирование имени и информации о себе
