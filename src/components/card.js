@@ -4,7 +4,7 @@ import { openPopup } from "./modal.js";
 
 // @todo: Функция создания карточки
 
-function createCard(cardData, deleteCallback) {
+function createCard(cardData, deleteCallback, imageOpenClick, cardLikeActive) {
   const cardElement = cardTemplate.cloneNode(true).querySelector(".card");
   const cardTitle = cardElement.querySelector(".card__title");
   const cardImage = cardElement.querySelector(".card__image");
@@ -14,21 +14,24 @@ function createCard(cardData, deleteCallback) {
   cardImage.src = cardData.link;
   cardImage.alt = cardData.name;
 
-  cardImage.addEventListener("click", () => {
-    openPopup(imagePopup);
-    const popupImage = imagePopup.querySelector(".popup__image");
-    const popupCaption = imagePopup.querySelector(".popup__caption");
+    function imageOpenClick () {
+      openPopup(imagePopup);
+      const popupImage = imagePopup.querySelector(".popup__image");
+      const popupCaption = imagePopup.querySelector(".popup__caption");
+  
+      popupImage.src = cardData.link;
+      popupImage.alt = cardData.name;
+      popupCaption.textContent = cardData.name;
+    }
+  cardImage.addEventListener("click", imageOpenClick);
 
-    popupImage.src = cardData.link;
-    popupImage.alt = cardData.name;
-    popupCaption.textContent = cardData.name;
-  });
-
+  function cardLikeActive (evt) {
+    evt.target.classList.toggle("card__like-button_is-active");
+  }
+  
   cardElement
     .querySelector(".card__like-button")
-    .addEventListener("click", function (evt) {
-      evt.target.classList.toggle("card__like-button_is-active");
-    });
+    .addEventListener("click", cardLikeActive);
 
   deleteButton.addEventListener("click", () => {
     deleteCallback(cardElement);

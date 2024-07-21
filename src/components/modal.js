@@ -1,25 +1,16 @@
 export {
   openPopup,
   closePopup,
-  keyHandler,
-  handleFormSubmit,
+  handleProfileFormSubmit,
   handleNewCardFormSubmit,
+  closePopupByOverlay,
 };
-import {
-  popups,
-  imagePopup,
-  nameInput,
-  editPopup,
-  descriptionInput,
-  profileTitle,
-  profileDescription,
-  cardTitleInput,
-  cardLinkInput,
-  placesList,
-  newCardPopup,
-  newCardForm,
-} from "../index.js";
-import { createCard, deleteCard } from "./card.js";
+
+const closePopupByOverlay = (event, closePopup) => {
+  if (event.target && event.target.classList.contains('popup')) {
+    closePopup(event.target);
+  }
+};
 
 // Функция открытия попапа
 function openPopup(popup) {
@@ -35,6 +26,7 @@ function closePopup(popup) {
 
 function keyHandler(evt) {
   if (evt.key === "Escape") {
+    const popups = document.querySelectorAll(".popup");
     popups.forEach((popup) => {
       closePopup(popup);
     });
@@ -42,28 +34,22 @@ function keyHandler(evt) {
 }
 
 // Редактирование имени и информации о себе
-function handleFormSubmit(evt) {
+function handleProfileFormSubmit(evt, nameInput, descriptionInput, profileTitle, profileDescription, editPopup, closePopup) {
   evt.preventDefault();
-
   const nameValue = nameInput.value;
   const descriptionValue = descriptionInput.value;
-
   profileTitle.textContent = nameValue;
   profileDescription.textContent = descriptionValue;
-
   closePopup(editPopup);
 }
 
-//Форма добавления карточки
-function handleNewCardFormSubmit(evt) {
+// Форма добавления карточки
+function handleNewCardFormSubmit(evt, cardTitleInput, cardLinkInput, createCard, deleteCard, placesList, newCardPopup, newCardForm, closePopup) {
   evt.preventDefault();
-
   const titleValue = cardTitleInput.value;
   const linkValue = cardLinkInput.value;
-
   const newCardData = { name: titleValue, link: linkValue };
   const newCardElement = createCard(newCardData, deleteCard);
-
   placesList.prepend(newCardElement);
   closePopup(newCardPopup);
   newCardForm.reset();

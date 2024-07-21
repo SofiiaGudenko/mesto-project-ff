@@ -4,31 +4,14 @@ import { createCard, deleteCard } from "./components/card.js";
 import {
   openPopup,
   closePopup,
-  keyHandler,
-  handleFormSubmit,
+  handleProfileFormSubmit,
   handleNewCardFormSubmit,
+  closePopupByOverlay,
 } from "./components/modal.js";
-export {
-  cardTemplate,
-  imagePopup,
-  popups,
-  editPopup,
-  nameInput,
-  descriptionInput,
-  profileTitle,
-  profileDescription,
-  cardTitleInput,
-  cardLinkInput,
-  placesList,
-  newCardPopup,
-  newCardForm,
-};
 
 // @todo: DOM узлы
-
 const cardTemplate = document.querySelector("#card-template").content;
 const placesList = document.querySelector(".places__list");
-const popups = document.querySelectorAll(".popup");
 const editPopup = document.querySelector(".popup_type_edit");
 const newCardPopup = document.querySelector(".popup_type_new-card");
 const imagePopup = document.querySelector(".popup_type_image");
@@ -46,13 +29,34 @@ const cardTitleInput = newCardForm.querySelector(
 );
 const cardLinkInput = newCardForm.querySelector(".popup__input_type_url");
 
+// Экспорт необходимых переменных
+export {
+  cardTemplate,
+  imagePopup,
+  editPopup,
+  nameInput,
+  descriptionInput,
+  profileTitle,
+  profileDescription,
+  cardTitleInput,
+  cardLinkInput,
+  placesList,
+  newCardPopup,
+  newCardForm,
+};
+
 // @todo: Вывести карточки на страницу
 initialCards.forEach((cardData) => {
   const cardElement = createCard(cardData, deleteCard);
   placesList.appendChild(cardElement);
 });
 
-editButton.addEventListener("click", () => openPopup(editPopup));
+editButton.addEventListener("click", () => {
+  nameInput.value = profileTitle.textContent;
+  descriptionInput.value = profileDescription.textContent;
+  openPopup(editPopup);
+});
+
 addButton.addEventListener("click", () => openPopup(newCardPopup));
 
 closeButtons.forEach((button) => {
@@ -62,14 +66,32 @@ closeButtons.forEach((button) => {
   });
 });
 
-window.addEventListener("click", (event) => {
-  popups.forEach((popup) => {
-    if (event.target === popup) {
-      closePopup(popup);
-    }
-  });
-});
+window.addEventListener("click", (event) =>
+  closePopupByOverlay(event, closePopup)
+);
 
-formElement.addEventListener("submit", handleFormSubmit);
+formElement.addEventListener("submit", (evt) =>
+  handleProfileFormSubmit(
+    evt,
+    nameInput,
+    descriptionInput,
+    profileTitle,
+    profileDescription,
+    editPopup,
+    closePopup
+  )
+);
 
-newCardForm.addEventListener("submit", handleNewCardFormSubmit);
+newCardForm.addEventListener("submit", (evt) =>
+  handleNewCardFormSubmit(
+    evt,
+    cardTitleInput,
+    cardLinkInput,
+    createCard,
+    deleteCard,
+    placesList,
+    newCardPopup,
+    newCardForm,
+    closePopup
+  )
+);
