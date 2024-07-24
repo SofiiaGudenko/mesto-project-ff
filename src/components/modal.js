@@ -1,8 +1,6 @@
 export {
   openPopup,
   closePopup,
-  handleProfileFormSubmit,
-  handleNewCardFormSubmit,
   closePopupByOverlay,
 };
 
@@ -25,32 +23,10 @@ function closePopup(popup) {
 }
 
 function keyHandler(evt) {
-    if (evt.key === "Escape") {
-      const openedPopup = document.querySelector(".popup_is-opened");
-      if (openedPopup) {
-        closePopup(openedPopup);
-      }
+  if (evt.key === "Escape") {
+    const openedPopup = document.querySelector(".popup_is-opened");
+    if (openedPopup) {
+      closePopup(openedPopup);
     }
-}
-
-// Редактирование имени и информации о себе
-function handleProfileFormSubmit(evt, nameInput, descriptionInput, profileTitle, profileDescription, editPopup, closePopup) {
-  evt.preventDefault();
-  const nameValue = nameInput.value;
-  const descriptionValue = descriptionInput.value;
-  profileTitle.textContent = nameValue;
-  profileDescription.textContent = descriptionValue;
-  closePopup(editPopup);
-}
-
-// Форма добавления карточки
-function handleNewCardFormSubmit(evt, cardTitleInput, cardLinkInput, createCard, deleteCard, placesList, newCardPopup, newCardForm, closePopup) {
-  evt.preventDefault();
-  const titleValue = cardTitleInput.value;
-  const linkValue = cardLinkInput.value;
-  const newCardData = { name: titleValue, link: linkValue };
-  const newCardElement = createCard(newCardData, deleteCard);
-  placesList.prepend(newCardElement);
-  closePopup(newCardPopup);
-  newCardForm.reset();
+  }
 }
