@@ -1,11 +1,5 @@
-export {
-  openPopup,
-  closePopup,
-  closePopupByOverlay,
-};
-
 const closePopupByOverlay = (event, closePopup) => {
-  if (event.target && event.target.classList.contains('popup')) {
+  if (event.target && event.target.classList.contains("popup")) {
     closePopup(event.target);
   }
 };
@@ -30,3 +24,5 @@ function keyHandler(evt) {
     }
   }
 }
+
+export { openPopup, closePopup, closePopupByOverlay };
